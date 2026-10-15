@@ -15,6 +15,9 @@ Records the major steps and decisions behind each AI consulting demo so any of t
 | Email Triage demo (Demo 2) | Airtable base "Ai Email Review/Drafter Example" | Data intact, automations lost |
 | Competitor Review Watch (Demo 3) | Airtable base "Competitor Review Watch" | Data intact, automations lost |
 | Source code and log copy | This repo, `demos/` and `docs/` | Current |
+| Portfolio page (customer-facing) | https://claude.ai/artifact/LXXQk44V64WVm8DcR1GP4x, source in `demos/portfolio/` | Private until shared |
+| Inbox Assistant interface (Demo 2) | Airtable base "Ai Email Review/Drafter Example" | Published inside the base |
+| Reputation Watch interface (Demo 3) | Airtable base "Competitor Review Watch" | Draft, not published |
 | Recovery notes from Sept 12 | https://claude.ai/artifact/Fgd7bBtc1UZoLCYLEP2vGt | Reference only |
 | Original consulting plan files | Alvin's PC: Documents\Claude Recovery, folder 6 | Not yet uploaded |
 
@@ -35,26 +38,35 @@ Decisions: assignee is free text so outside people can be assigned; read-only vi
 
 ## Demo 2: Email Triage (Airtable)
 
-Status: data intact (8 sample emails with AI drafts), automations and interface lost.
+Rebuilt October 15, 2026. Data was intact; automations and screens rebuilt.
 
-Rebuild steps (not started):
-1. Decide trigger: Zapier Gmail trigger or Airtable email intake.
-2. AI step to classify and draft, writing back to the record.
-3. Airtable interface for approve/edit.
-4. Send action that emails the approved draft.
-5. Record final design and screenshot.
+Built:
+- Automation 1, AI triage: new email -> AI picks Category and Priority, drafts a reply, sets Pending Review.
+- Automation 2, Send approved reply: Status = Approved -> email the draft to the sender (built-in email until Gmail is connected), set Sent.
+- Automation 3, Score chatbot leads: new lead -> AI rates Hot/Warm/Interested/Browsing and summarizes the service needed.
+- Interface "Inbox Assistant": Review Queue (record review with tabs Needs my review, Urgent, Sent), Pipeline (kanban by status), Website Leads (kanban by lead status). Published.
+
+Left to do:
+1. Alvin turns on the three automations in Airtable.
+2. Connect Gmail in Airtable and swap the send step.
+3. Pick the real email intake (Airtable email trigger or Zapier Gmail trigger).
+4. Delete two junk JSON choices from the Priority and Category fields.
 
 ## Demo 3: Competitor Review Watch (Airtable)
 
-Status: data intact (6 Gulf Shores restaurants, De Soto's marked as client), automations lost, Weekly Digests empty.
+Rebuilt October 15, 2026, except the Google fetch (needs an API key).
 
-Rebuild steps (not started):
-1. Confirm Google Places API key or alternative.
-2. Weekly fetch as scheduled automation.
-3. AI analysis step writing to Reviews.
-4. Digest writer and email.
-5. Interface dashboard with rating trend.
-6. Record final design and screenshot.
+Built:
+- Lookup fields on Reviews: Business Name, Is My Business.
+- Automation 1, Analyze new review: AI tags Sentiment and Themes; drafts an owner reply only for the client's own reviews.
+- Automation 2, Monday digest: weekly cron, Monday 8am Central -> find past week's reviews -> AI writes headline and digest -> saved to Weekly Digests.
+- Interface "Reputation Watch" (draft): Overview dashboard (rating trend, new reviews per week, business dropdown, recent reviews grid), Reply to Reviews (record review, tabs My business and Needs attention), Weekly Digests, Businesses Watched.
+
+Left to do:
+1. Google Places API key, then a scheduled script step writing Snapshots and Reviews.
+2. Alvin turns on the two automations.
+3. Add owner email to the Monday digest.
+4. Publish the interface when ready to show.
 
 ## Decisions log
 
@@ -64,11 +76,15 @@ Rebuild steps (not started):
 | Oct 2, 2026 | Task board as Claude artifact with shared storage | Free, one link, live sync, no per-seat cost. |
 | Oct 2, 2026 | Log kept as Claude doc plus repo copy | Doc is easy to read and comment on; repo survives account or machine loss. |
 | Oct 2, 2026 | Demos stay customer-facing, backend hidden | Original portfolio design preference. |
+| Oct 15, 2026 | Portfolio presented as before/after per service, not as a tool list | Customers buy the outcome; the tools stay hidden. |
+| Oct 15, 2026 | Airtable's built-in AI steps instead of a separate AI API | No extra account or key; runs inside the client's base. |
+| Oct 15, 2026 | Nothing published publicly; all pages private until Alvin shares | Alvin's instruction. |
 
 ## Next up
 
-1. Rewire Email Triage automation.
-2. Rewire Competitor Review Watch automation.
-3. Alvin uploads the three consulting plan files from the PC.
-4. Alvin shares the task board with employees.
-5. Combine demos into one presentation.
+1. Alvin: turn on the five automations (three in email base, two in review base).
+2. Alvin: Google Places API key for the review fetch.
+3. Alvin: upload the three consulting plan files from the PC.
+4. Alvin: share the task board with employees.
+5. Next demo candidates: appointment reminders, invoice follow-up (QuickBooks is connected), weekly owner report.
+6. Combine demos into one presentation.

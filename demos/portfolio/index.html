@@ -1,0 +1,298 @@
+<title>Gulf Coast AI Automation</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: a narrow left-aligned column of text; services as a ledger of before/after rows with a wide display face for the headline. */
+  :root {
+    --bg: #f4f6f5;
+    --surface: #ffffff;
+    --ink: #16211f;
+    --ink-2: #566562;
+    --line: #d6ddda;
+    --accent: #0f6a66;
+    --accent-ink: #ffffff;
+    --accent-soft: #dcecea;
+    --live: #2f7d4f;
+    --live-soft: #e2f2e8;
+    --build: #b7791f;
+    --build-soft: #fbf1dc;
+    --display: 'Archivo', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+    --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', 'Consolas', monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101716; --surface: #182120; --ink: #e8eeec; --ink-2: #9aaba7; --line: #2a3634;
+      --accent: #5fc3bd; --accent-ink: #101716; --accent-soft: #173330;
+      --live: #6cc38f; --live-soft: #173224; --build: #e0b35a; --build-soft: #352b14;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101716; --surface: #182120; --ink: #e8eeec; --ink-2: #9aaba7; --line: #2a3634;
+    --accent: #5fc3bd; --accent-ink: #101716; --accent-soft: #173330;
+    --live: #6cc38f; --live-soft: #173224; --build: #e0b35a; --build-soft: #352b14;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.55;
+    padding-block: 0 64px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  .eyebrow { font-family: var(--mono); font-size: .74rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-2); }
+
+  /* Header */
+  header { padding-block: 28px 44px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 22px; }
+  .nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .brand { font-family: var(--display); font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+  .brand span { color: var(--accent); }
+  .nav a { text-decoration: none; color: var(--ink-2); font-size: .95rem; }
+  .nav nav { display: flex; gap: 18px; }
+  h1 { font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 800; line-height: 1.02; letter-spacing: -.025em; max-width: 14ch; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { font-size: 1.15rem; color: var(--ink-2); max-width: 52ch; }
+  .cta-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: .95rem; cursor: pointer; font-family: var(--body); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn:hover { filter: brightness(1.05); }
+
+  /* Sections */
+  section { padding-block: 44px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 22px; }
+  section:last-of-type { border-bottom: 0; }
+  h2 { font-size: 1.55rem; font-weight: 700; letter-spacing: -.015em; }
+  .sec-head { display: flex; flex-direction: column; gap: 6px; }
+  .sec-head p { color: var(--ink-2); max-width: 60ch; }
+
+  /* Service ledger */
+  .ledger { display: flex; flex-direction: column; }
+  .svc { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 20px; padding-block: 24px; border-top: 1px solid var(--line); }
+  .svc:last-child { border-bottom: 1px solid var(--line); }
+  .svc > * { min-width: 0; }
+  .svc h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; margin-bottom: 6px; }
+  .svc .who { color: var(--ink-2); font-size: .95rem; }
+  .status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+  .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .status.live { background: var(--live-soft); color: var(--live); }
+  .status.build { background: var(--build-soft); color: var(--build); }
+  .ba .lab { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-2); margin-bottom: 6px; }
+  .ba.after .lab { color: var(--accent); }
+  .ba p { font-size: .98rem; }
+  .ba ul { margin: 0; padding-left: 18px; font-size: .95rem; display: flex; flex-direction: column; gap: 3px; }
+  .svc .links { margin-top: 10px; font-size: .9rem; display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* More list */
+  .more { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+  .more div { padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); display: flex; flex-direction: column; gap: 4px; }
+  .more strong { font-family: var(--display); font-weight: 700; font-size: .98rem; }
+  .more p { font-size: .92rem; color: var(--ink-2); }
+
+  /* Process */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; counter-reset: step; }
+  .step { display: flex; flex-direction: column; gap: 6px; padding-top: 12px; border-top: 2px solid var(--accent); }
+  .step::before { counter-increment: step; content: counter(step, decimal-leading-zero); font-family: var(--mono); font-size: .75rem; color: var(--accent); }
+  .step strong { font-family: var(--display); font-size: 1rem; }
+  .step p { font-size: .93rem; color: var(--ink-2); }
+
+  /* Contact */
+  .contact { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .contact .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .contact .num { font-family: var(--mono); font-size: 1.25rem; font-weight: 500; letter-spacing: .02em; user-select: all; }
+  .copy { font-size: .85rem; padding: 5px 10px; }
+  .copied { color: var(--live); font-size: .85rem; }
+  .copied[hidden] { display: none; }
+  footer { padding-block: 26px; color: var(--ink-2); font-size: .85rem; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+
+  @media (max-width: 700px) {
+    .svc { grid-template-columns: 1fr; gap: 14px; }
+    .svc:last-child { border-bottom: 1px solid var(--line); }
+    body { font-size: 16px; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="nav">
+      <div class="brand">Gulf Coast <span>AI Automation</span></div>
+      <nav><a href="#work">Work</a><a href="#more">Services</a><a href="#how">How it works</a><a href="#contact">Contact</a></nav>
+    </div>
+    <p class="eyebrow">Baldwin County and the Alabama Gulf Coast</p>
+    <h1>The busywork in your business, <em>handled while you sleep.</em></h1>
+    <p class="lede">We build small, reliable automations for local businesses: email that sorts and answers itself, leads that get scored before you call them, reviews that get tracked without you checking. You approve. The system does the rest.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#contact">Book a 20 minute call</a>
+      <a class="btn" href="#work">See the work</a>
+    </div>
+  </header>
+
+  <section id="work">
+    <div class="sec-head">
+      <h2>Built and running</h2>
+      <p>Each of these is a working system we can show you live. Every one is built on tools you already pay for or that cost nothing, and you own it when we are done.</p>
+    </div>
+    <div class="ledger">
+
+      <article class="svc">
+        <div>
+          <span class="status live">Live demo</span>
+          <h3>Inbox Assistant</h3>
+          <p class="who">For property managers, contractors, rental hosts, and any office that gets more email than it can answer.</p>
+          <div class="links"><span class="eyebrow">Demo available on a call</span></div>
+        </div>
+        <div class="ba before">
+          <div class="lab">Before</div>
+          <p>Fifty emails a day. Tenant questions, maintenance calls, vendor pitches, and spam all in one pile. The urgent one gets missed. Replies take an evening.</p>
+        </div>
+        <div class="ba after">
+          <div class="lab">After</div>
+          <ul>
+            <li>Every email is sorted into a category and ranked by priority the moment it arrives.</li>
+            <li>A reply is drafted in your voice, waiting for you.</li>
+            <li>You read the email and the draft side by side, tap Approve, and it sends.</li>
+            <li>Urgent items like no AC, a leak, or a lockout rise to the top.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="svc">
+        <div>
+          <span class="status live">Live demo</span>
+          <h3>Website Lead Catcher</h3>
+          <p class="who">For any business whose website gets visitors but not phone calls.</p>
+          <div class="links"><span class="eyebrow">Demo available on a call</span></div>
+        </div>
+        <div class="ba before">
+          <div class="lab">Before</div>
+          <p>People land on your site after hours, have a question, and leave. You never know they were there.</p>
+        </div>
+        <div class="ba after">
+          <div class="lab">After</div>
+          <ul>
+            <li>A chat window answers common questions from a list you control.</li>
+            <li>It collects the visitor's name, phone, and what they need.</li>
+            <li>Each lead is scored Hot, Warm, Interested, or Browsing before you see it.</li>
+            <li>Your team opens one board in the morning and calls the hot ones first.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="svc">
+        <div>
+          <span class="status live">Live</span>
+          <h3>Team Task Board</h3>
+          <p class="who">For owners who run a crew and need everyone looking at the same list.</p>
+          <div class="links"><span class="eyebrow">Demo available on a call</span></div>
+        </div>
+        <div class="ba before">
+          <div class="lab">Before</div>
+          <p>Jobs live in text messages, a notebook, and three people's heads. Nobody is sure what is done.</p>
+        </div>
+        <div class="ba after">
+          <div class="lab">After</div>
+          <ul>
+            <li>One link. Everyone sees the same board on their phone.</li>
+            <li>Drag a job from To do to Done and it updates for the whole team instantly.</li>
+            <li>Filter by person or client. Columns match how you already work.</li>
+            <li>No per-seat fees.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="svc">
+        <div>
+          <span class="status build">In progress</span>
+          <h3>Reputation Watch</h3>
+          <p class="who">For restaurants, roofers, dentists, and anyone whose next customer reads Google reviews first.</p>
+        </div>
+        <div class="ba before">
+          <div class="lab">Before</div>
+          <p>You check your Google rating when you remember to. You find out about a bad review from a friend. You have no idea what competitors are doing.</p>
+        </div>
+        <div class="ba after">
+          <div class="lab">After</div>
+          <ul>
+            <li>Your rating and your competitors' ratings are logged every week.</li>
+            <li>New reviews are tagged by mood and theme: pricing, speed, staff.</li>
+            <li>A reply is drafted for each of your own reviews.</li>
+            <li>A short Monday digest tells you what changed and what to do about it.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="more">
+    <div class="sec-head">
+      <h2>What else we automate</h2>
+      <p>These are the jobs small businesses hand us most often. Each one takes about a week to build.</p>
+    </div>
+    <div class="more">
+      <div><strong>Appointment reminders</strong><p>Text and email reminders the day before, with a one-tap confirm. Fewer no-shows.</p></div>
+      <div><strong>Invoice follow-up</strong><p>Polite reminders at 7, 14, and 30 days past due, and a summary of who still owes you.</p></div>
+      <div><strong>New customer onboarding</strong><p>Welcome email, intake form, and a checklist for your team, triggered by one new row.</p></div>
+      <div><strong>Weekly owner report</strong><p>One Monday email with sales, leads, open jobs, and reviews, pulled from the tools you use.</p></div>
+      <div><strong>Quote and proposal drafts</strong><p>Turn a short form into a formatted quote that is ready to send.</p></div>
+      <div><strong>Document sorting</strong><p>Receipts, leases, and contracts filed by type and client the moment they land in your inbox.</p></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="sec-head">
+      <h2>How it works</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><strong>Discovery call</strong><p>Twenty minutes. You tell us the task that eats your week. We tell you if it can be automated and what it will cost.</p></div>
+      <div class="step"><strong>Build</strong><p>One to two weeks. We build it on your accounts, with your data, and show you a working version before anything goes live.</p></div>
+      <div class="step"><strong>Hand off</strong><p>We train you and your team, write a one page guide, and turn it on. You own everything.</p></div>
+      <div class="step"><strong>Care</strong><p>Optional monthly check-in to keep it running, adjust it as the business changes, and add the next one.</p></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head">
+      <h2>Talk to Alvin</h2>
+      <p>Call or text. If it is after hours, leave a message and you will hear back the next morning.</p>
+    </div>
+    <div class="contact">
+      <div class="row">
+        <span class="num" id="phone">(251) 278-4302</span>
+        <button class="btn copy" id="copyPhone" type="button">Copy number</button>
+        <span class="copied" id="copiedMsg" hidden>Copied</span>
+      </div>
+      <p class="eyebrow">Serving Foley, Daphne, Fairhope, Gulf Shores, Orange Beach, and Mobile</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Gulf Coast AI Automation</span>
+    <span>Built on tools you already own.</span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('copyPhone');
+    var num = document.getElementById('phone');
+    var msg = document.getElementById('copiedMsg');
+    btn.addEventListener('click', function () {
+      var text = '2512784302';
+      var done = function () { msg.hidden = false; setTimeout(function () { msg.hidden = true; }, 2000); };
+      var fallback = function () {
+        try { var r = document.createRange(); r.selectNodeContents(num); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) {}
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  })();
+</script>
